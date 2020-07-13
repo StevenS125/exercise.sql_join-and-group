@@ -66,3 +66,5 @@ ORDER BY (quantityOrdered*priceEach)  DESC;
 -- Write a query to output the month (January, February, etc.), 4-digit year, and total sales for that month.
 -- The first column should be labeled Month, the second Year, and the third should be Payments Received.
 -- Values in the third column should be formatted as numbers with two decimals – for example: 694,292.68.
+SELECT MONTHNAME(paymentdate) AS Month,extract(year FROM paymentdate) AS Year, sum(amount) AS 'Payments Received'
+FROM payments GROUP BY 1,2 ORDER BY Year(paymentdate), MONTH(paymentdate) ASC;
