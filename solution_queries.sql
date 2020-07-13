@@ -37,8 +37,8 @@ SELECT status AS "ORDER STATUS", count(*) AS "# ORDERS" FROM orders GROUP BY STA
 -- Order by the second column descending.
 
 SELECT products.productLine AS 'Product Line', sum(quantityOrdered) AS '#Sold'
-FROM 
-products JOIN orderdetails ON products.productCode = orderdetails.productCode
+FROM products 
+JOIN orderdetails ON products.productCode = orderdetails.productCode
 JOIN productlines ON productlines.productLine = products.productLine
 GROUP BY products.productline
 ORDER BY sum(quantityOrdered) DESC;
@@ -49,6 +49,18 @@ ORDER BY sum(quantityOrdered) DESC;
 -- The second column should be titled # Orders and the third should be Total Sales.
 -- Sort the output by Total Sales descending.
 -- Only (and all) employees with the job title Sales Rep should be included in the output, and if the employee made no sales the Total Sales should display as 0.00.
+
+SELECT CONCAT(employees.lastName,employees.firstName) AS 'Sales Rep',
+COUNT(quantityOrdered) AS  '#ORDERS',
+IFNULL((quantityOrdered*priceEach), 0.00) AS 'Total Sales'
+FROM employees 
+LEFT JOIN customers ON employees.employeeNumber = customers.salesRepEmployeeNumber
+LEFT JOIN orders ON customers.customerNumber=orders.customerNumber
+LEFT JOIN orderdetails ON orders.orderNumber=orderdetails.orderNumber
+WHERE employees.jobTitle = 'Sales Rep'
+GROUP BY CONCAT(employees.employeeNumber) ,'#ORDERS'
+ORDER BY (quantityOrdered*priceEach)  DESC;
+
 -- Part 6
 -- Your product team is requesting data to help them create a bar-chart of monthly sales since the company’s inception.
 -- Write a query to output the month (January, February, etc.), 4-digit year, and total sales for that month.
