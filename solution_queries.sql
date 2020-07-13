@@ -25,10 +25,18 @@ ORDER BY  (quantityOrdered * priceEach) desc;
 -- Write a query which lists order status and the # of orders with that status.
 -- Column headers should be Order Status and # Orders.
 -- Sort alphabetically by status.
+
+SELECT status AS "ORDER STATUS", count(*) AS "# ORDERS" FROM orders GROUP BY STATUS ORDER BY STATUS ASC;
+
+
+
+
 -- Part 4
 -- Write a query to list, for each product line, the total # of products sold from that product line.
 -- The first column should be Product Line and the second should be # Sold.
 -- Order by the second column descending.
+
+
 -- Part 5
 -- For each employee who represents customers, output the total # of orders that employee’s customers have placed alongside the total sale amount of those orders.
 -- The employee name should be output as a single column named Sales Rep formatted as lastName, firstName.
