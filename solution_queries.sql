@@ -36,6 +36,12 @@ SELECT status AS "ORDER STATUS", count(*) AS "# ORDERS" FROM orders GROUP BY STA
 -- The first column should be Product Line and the second should be # Sold.
 -- Order by the second column descending.
 
+SELECT products.productLine AS 'Product Line', sum(quantityOrdered) AS '#Sold'
+FROM 
+products JOIN orderdetails ON products.productCode = orderdetails.productCode
+JOIN productlines ON productlines.productLine = products.productLine
+GROUP BY products.productline
+ORDER BY sum(quantityOrdered) DESC;
 
 -- Part 5
 -- For each employee who represents customers, output the total # of orders that employee’s customers have placed alongside the total sale amount of those orders.
